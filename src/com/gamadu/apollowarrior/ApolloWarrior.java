@@ -11,9 +11,11 @@ import com.apollo.Entity;
 import com.apollo.EventHandler;
 import com.apollo.World;
 import com.apollo.components.Transform;
+import com.apollo.managers.EntityManager;
 import com.apollo.managers.GroupManager;
 import com.apollo.managers.RenderManager;
 import com.apollo.managers.TagManager;
+import com.apollo.utils.Bag;
 import com.gamadu.apollowarrior.builders.BulletBuilder;
 import com.gamadu.apollowarrior.builders.EnemyShipBuilder;
 import com.gamadu.apollowarrior.builders.ExplosionBuilder;
@@ -46,6 +48,8 @@ public class ApolloWarrior extends BasicGame {
 
 	private void createWorld() {
 		world = new World();
+		EntityManager em = world.getEntityManager();
+		Bag<Entity> entitiesHavingHealth = em.getEntitiesByComponentType(Health.class);
 		
 		renderManager = new RenderManager<Graphics>(container.getGraphics());
 		tagManager = new TagManager();

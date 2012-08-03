@@ -1,7 +1,5 @@
 package com.gamadu.apollowarrior;
 
-import com.apollo.managers.Tag;
-
-public enum Tags implements Tag {
-	Player;
+public class Tags {
+	public static final String Player = "Player";
 }

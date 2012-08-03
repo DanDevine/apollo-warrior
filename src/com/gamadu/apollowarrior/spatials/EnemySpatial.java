@@ -4,18 +4,28 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 
+import com.apollo.Entity;
 import com.apollo.Layer;
 import com.apollo.annotate.InjectComponent;
+import com.apollo.annotate.InjectTaggedEntity;
 import com.apollo.components.Transform;
 
 public class EnemySpatial extends SlickSpatial {
 	@InjectComponent
 	Transform transform;
 	
+	@InjectTaggedEntity("Player")
+	Entity player;
+	
 	private Polygon ship;
 	
 	public EnemySpatial(Polygon ship) {
 		this.ship = ship;
+	}
+	
+	@Override
+	public void initialize() {
+		System.out.println("I have player: " + player);
 	}
 	
 	@Override
