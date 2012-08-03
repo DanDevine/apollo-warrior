@@ -19,9 +19,12 @@ import com.gamadu.apollowarrior.builders.ExplosionBuilder;
 import com.gamadu.apollowarrior.components.Movement;
 import com.gamadu.apollowarrior.managers.CollisionManager;
 import com.gamadu.apollowarrior.managers.EnemyShipSpawnManager;
+import com.gamadu.apollowarrior.spatials.BackgroundSpatial;
 import com.gamadu.apollowarrior.spatials.PlayerSpatial;
 
 public class ApolloWarrior extends BasicGame {
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 
 	private World world;
 	private RenderManager<Graphics> renderManager;
@@ -58,6 +61,10 @@ public class ApolloWarrior extends BasicGame {
 		player.setComponent(new Movement());
 		world.addEntity(player);
 		tagManager.register(Tags.Player, player);
+		
+		Entity bg = new Entity(world);
+		bg.setComponent(new BackgroundSpatial());
+		world.addEntity(bg);
 		
 		
 		for(int i = 0; 10 > i; i++) {
@@ -105,8 +112,7 @@ public class ApolloWarrior extends BasicGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new ApolloWarrior());
-		container.setDisplayMode(1280, 720, false);
-		// container.setDisplayMode(1920,1200,true);
+		container.setDisplayMode(ApolloWarrior.WIDTH, ApolloWarrior.HEIGHT, false);
 		container.setTargetFrameRate(60);
 		container.setMinimumLogicUpdateInterval(1);
 		container.setMaximumLogicUpdateInterval(1);

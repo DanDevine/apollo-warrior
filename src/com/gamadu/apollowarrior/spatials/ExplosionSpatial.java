@@ -18,7 +18,7 @@ public class ExplosionSpatial extends SlickSpatial {
 	
 	@Override
 	public Layer getLayer() {
-		return Layers.Projectiles;
+		return Layers.Effects;
 	}
 
 	@Override
