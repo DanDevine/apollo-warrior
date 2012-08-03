@@ -5,11 +5,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 
 import com.apollo.Layer;
-import com.apollo.annotate.InjectFromOwner;
+import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 
 public class EnemySpatial extends SlickSpatial {
-	@InjectFromOwner
+	@InjectComponent
 	Transform transform;
 	
 	private Polygon ship;

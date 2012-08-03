@@ -4,11 +4,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import com.apollo.Layer;
-import com.apollo.annotate.InjectFromOwner;
+import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 
 public class BulletSpatial extends SlickSpatial {
-	@InjectFromOwner
+	@InjectComponent
 	private Transform transform;
 	
 	@Override

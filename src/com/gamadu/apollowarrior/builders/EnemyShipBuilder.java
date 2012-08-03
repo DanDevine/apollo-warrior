@@ -7,7 +7,7 @@ import com.apollo.Entity;
 import com.apollo.EntityBuilder;
 import com.apollo.EventHandler;
 import com.apollo.World;
-import com.apollo.annotate.InjectFromOwner;
+import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 import com.apollo.managers.GroupManager;
 import com.apollo.utils.Timer;
@@ -66,7 +66,7 @@ public class EnemyShipBuilder implements EntityBuilder {
 
 	private Component createShootAI(final World world) {
 		return new Component() {
-			@InjectFromOwner
+			@InjectComponent
 			Transform transform;
 			
 			private Timer expiresTimer;
@@ -94,9 +94,9 @@ public class EnemyShipBuilder implements EntityBuilder {
 
 	private Component createMovementAI() {
 		return new Component() {
-			@InjectFromOwner
+			@InjectComponent
 			Movement movement;
-			@InjectFromOwner
+			@InjectComponent
 			Transform transform;
 			
 			@Override

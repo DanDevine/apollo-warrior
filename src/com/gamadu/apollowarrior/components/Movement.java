@@ -1,11 +1,11 @@
 package com.gamadu.apollowarrior.components;
 
 import com.apollo.Component;
-import com.apollo.annotate.InjectFromOwner;
+import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 
 public class Movement extends Component {
-	@InjectFromOwner
+	@InjectComponent
 	Transform transform;
 	
 	private float vx, vy;
