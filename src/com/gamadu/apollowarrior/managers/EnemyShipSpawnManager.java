@@ -21,7 +21,7 @@ public class EnemyShipSpawnManager extends Manager {
 			@Override
 			public void execute() {
 				Entity enemyShip = world.createEntity("EnemyShip");
-				enemyShip.getComponent(Transform.class).setLocation((float)Math.random()*container.getWidth(), 20);
+				enemyShip.getComponent(Transform.class).setLocation((float)Math.random()*container.getWidth(), 60);
 				world.addEntity(enemyShip);
 			}
 		};

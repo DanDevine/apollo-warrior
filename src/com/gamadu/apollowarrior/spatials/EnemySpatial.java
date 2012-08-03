@@ -1,8 +1,7 @@
 package com.gamadu.apollowarrior.spatials;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.Image;
 
 import com.apollo.Entity;
 import com.apollo.Layer;
@@ -17,9 +16,9 @@ public class EnemySpatial extends SlickSpatial {
 	@InjectTaggedEntity("Player")
 	Entity player;
 	
-	private Polygon ship;
+	private Image ship;
 	
-	public EnemySpatial(Polygon ship) {
+	public EnemySpatial(Image ship) {
 		this.ship = ship;
 	}
 	
@@ -30,11 +29,7 @@ public class EnemySpatial extends SlickSpatial {
 	
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.red);
-		ship.setCenterX(transform.getX());
-		ship.setCenterY(transform.getY());
-		//ship.setLocation(transform.getX(), transform.getY());
-		g.fill(ship);
+		ship.drawCentered(transform.getX(), transform.getY());
 	}
 
 	@Override

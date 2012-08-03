@@ -1,8 +1,7 @@
 package com.gamadu.apollowarrior.spatials;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.Image;
 
 import com.apollo.Layer;
 import com.apollo.annotate.InjectComponent;
@@ -12,16 +11,14 @@ import com.apollo.components.spatial.Node;
 public class PlayerNode extends Node<Graphics> {
 	@InjectComponent
 	Transform transform;
+	private Image shipImage;
 	
-	private Polygon ship;
-	
+	public PlayerNode(Image ship) {
+		this.shipImage = ship;
+	}
+
 	@Override
 	public void initialize() {
-		ship = new Polygon();
-		ship.addPoint(0,0);
-		ship.addPoint(40,0);
-		ship.addPoint(20,-20);
-
 	}
 	
 	@Override
@@ -31,10 +28,7 @@ public class PlayerNode extends Node<Graphics> {
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.green);
-		ship.setCenterX(transform.getX());
-		ship.setCenterY(transform.getY());
-		g.fill(ship);
+		shipImage.drawCentered(transform.getX(), transform.getY());
 	}
 
 	@Override

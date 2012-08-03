@@ -1,6 +1,6 @@
 package com.gamadu.apollowarrior.builders;
 
-import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.Image;
 
 import com.apollo.Component;
 import com.apollo.Entity;
@@ -11,30 +11,23 @@ import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
 import com.apollo.managers.GroupManager;
 import com.apollo.utils.Timer;
+import com.gamadu.apollowarrior.ApolloWarrior;
 import com.gamadu.apollowarrior.Groups;
 import com.gamadu.apollowarrior.components.Movement;
 import com.gamadu.apollowarrior.spatials.EnemySpatial;
 
 public class EnemyShipBuilder implements EntityBuilder {
-	private Polygon ship;
-	private int containerWidth;
-	private int containerHeight;
+	private Image ship1;
 
-	public EnemyShipBuilder(int containerWidth, int containerHeight) {
-		ship = new Polygon();
-		ship.addPoint(0,0);
-		ship.addPoint(40,0);
-		ship.addPoint(20,20);
-		
-		this.containerWidth = containerWidth;
-		this.containerHeight = containerHeight;
+	public EnemyShipBuilder(Image ship1) {
+		this.ship1 = ship1;
 	}
 
 	@Override
 	public Entity buildEntity(final World world) {
 		final Entity e = new Entity(world);
 		e.setComponent(new Transform());
-		e.setComponent(new EnemySpatial(ship));
+		e.setComponent(new EnemySpatial(ship1));
 		e.setComponent(new Movement(Math.random()>0.5?0.1f:-0.1f, 0f));
 		
 		// A little AI controller to manage movement.
@@ -105,8 +98,8 @@ public class EnemyShipBuilder implements EntityBuilder {
 					transform.setX(0);
 					movement.setVx(-movement.getVx());
 				}
-				else if(transform.getX() > containerWidth) {
-					transform.setX(containerWidth);
+				else if(transform.getX() > ApolloWarrior.WIDTH) {
+					transform.setX(ApolloWarrior.WIDTH);
 					movement.setVx(-movement.getVx());
 				}
 			}

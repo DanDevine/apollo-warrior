@@ -16,7 +16,7 @@ public class BackgroundSpatial extends SlickSpatial {
 
 	public BackgroundSpatial() {
 		screen = new Rectangle(0, 0, ApolloWarrior.WIDTH, ApolloWarrior.HEIGHT);
-		fill = new GradientFill(0, 0, Color.black, 0, ApolloWarrior.HEIGHT, Color.blue);
+		fill = new GradientFill(0, 0, Color.black, 0, ApolloWarrior.HEIGHT, new Color(0,0,0.1f));
 	}
 
 	@Override

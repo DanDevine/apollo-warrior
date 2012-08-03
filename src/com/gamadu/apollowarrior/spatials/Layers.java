@@ -4,9 +4,9 @@ import com.apollo.Layer;
 
 public enum Layers implements Layer {
 	Background,
+	Ships, 
 	Effects,
 	Projectiles, 
-	Ships, 
 	Interface;
 
 	@Override

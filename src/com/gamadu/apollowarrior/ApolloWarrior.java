@@ -4,6 +4,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -27,8 +28,8 @@ import com.gamadu.apollowarrior.spatials.BackgroundSpatial;
 import com.gamadu.apollowarrior.spatials.PlayerNode;
 
 public class ApolloWarrior extends BasicGame {
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 768;
 
 	private World world;
 	private RenderManager<Graphics> renderManager;
@@ -46,10 +47,8 @@ public class ApolloWarrior extends BasicGame {
 		createWorld();
 	}
 
-	private void createWorld() {
+	private void createWorld() throws SlickException {
 		world = new World();
-		EntityManager em = world.getEntityManager();
-		Bag<Entity> entitiesHavingHealth = em.getEntitiesByComponentType(Health.class);
 		
 		renderManager = new RenderManager<Graphics>(container.getGraphics());
 		tagManager = new TagManager();
@@ -62,7 +61,7 @@ public class ApolloWarrior extends BasicGame {
 		world.setManager(new CollisionManager(container));
 		
 		world.setEntityBuilder("Bullet", new BulletBuilder());
-		world.setEntityBuilder("EnemyShip", new EnemyShipBuilder(container.getWidth(), container.getHeight()));
+		world.setEntityBuilder("EnemyShip", new EnemyShipBuilder(new Image("gfx/enemy1.png")));
 		world.setEntityBuilder("BulletExplosion", new ExplosionBuilder(5));
 		world.setEntityBuilder("ShipExplosion", new ExplosionBuilder(20));
 		
@@ -73,9 +72,9 @@ public class ApolloWarrior extends BasicGame {
 	}
 
 	private void createInitialShips(GameContainer container) {
-		for(int i = 0; 10 > i; i++) {
+		for(int i = 0; 3 > i; i++) {
 			Entity enemyShip = world.createEntity("EnemyShip");
-			enemyShip.getComponent(Transform.class).setLocation((float)Math.random()*container.getWidth(), 20);
+			enemyShip.getComponent(Transform.class).setLocation((float)Math.random()*container.getWidth(), 60);
 			world.addEntity(enemyShip);
 		}
 	}
@@ -86,17 +85,20 @@ public class ApolloWarrior extends BasicGame {
 		world.addEntity(bg);
 	}
 
-	private void createPlayerShip(GameContainer container) {
+	private void createPlayerShip(GameContainer container) throws SlickException {
 		Entity player = new Entity(world);
-		player.setComponent(new Transform(container.getWidth()/2, container.getHeight()-30));
+		player.setComponent(new Transform(container.getWidth()/2, container.getHeight()-70));
 		player.setComponent(new Health(100));
-		player.setComponent(new PlayerNode());
+		player.setComponent(new PlayerNode(new Image("gfx/ship.png")));
 		player.setComponent(new Movement());
 		player.addEventHandler("KILLED", new EventHandler() {
 			@Override
 			public void handleEvent() {
 				// just restart everything.
-				createWorld();
+				try {
+					createWorld();
+				} catch (SlickException e) {
+				}
 			}
 		});
 		world.addEntity(player);
