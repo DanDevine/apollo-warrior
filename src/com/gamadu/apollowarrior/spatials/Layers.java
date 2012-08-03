@@ -6,7 +6,8 @@ public enum Layers implements Layer {
 	Background,
 	Effects,
 	Projectiles, 
-	Ships;
+	Ships, 
+	Interface;
 
 	@Override
 	public int getLayerId() {

@@ -11,6 +11,7 @@ import com.apollo.managers.TagManager;
 import com.apollo.utils.Bag;
 import com.gamadu.apollowarrior.Groups;
 import com.gamadu.apollowarrior.Tags;
+import com.gamadu.apollowarrior.components.Health;
 
 public class CollisionManager extends Manager {
 	@InjectManager
@@ -67,6 +68,7 @@ public class CollisionManager extends Manager {
 			if(pt.getDistanceTo(ct) < 20) {
 				world.deleteEntity(cb);
 				cb.fireEvent("EXPLODED");
+				playerShip.getComponent(Health.class).addDamage(13); // 13 is bad luck.
 			}
 		}
 	}

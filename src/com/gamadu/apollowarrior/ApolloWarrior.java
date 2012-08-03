@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.apollo.Entity;
+import com.apollo.EventHandler;
 import com.apollo.World;
 import com.apollo.components.Transform;
 import com.apollo.managers.GroupManager;
@@ -16,11 +17,12 @@ import com.apollo.managers.TagManager;
 import com.gamadu.apollowarrior.builders.BulletBuilder;
 import com.gamadu.apollowarrior.builders.EnemyShipBuilder;
 import com.gamadu.apollowarrior.builders.ExplosionBuilder;
+import com.gamadu.apollowarrior.components.Health;
 import com.gamadu.apollowarrior.components.Movement;
 import com.gamadu.apollowarrior.managers.CollisionManager;
 import com.gamadu.apollowarrior.managers.EnemyShipSpawnManager;
 import com.gamadu.apollowarrior.spatials.BackgroundSpatial;
-import com.gamadu.apollowarrior.spatials.PlayerSpatial;
+import com.gamadu.apollowarrior.spatials.PlayerNode;
 
 public class ApolloWarrior extends BasicGame {
 	public static final int WIDTH = 800;
@@ -30,6 +32,7 @@ public class ApolloWarrior extends BasicGame {
 	private RenderManager<Graphics> renderManager;
 	private TagManager tagManager;
 	private GroupManager groupManager;
+	private GameContainer container;
 
 	public ApolloWarrior() {
 		super("Apollo Warrior");
@@ -37,6 +40,11 @@ public class ApolloWarrior extends BasicGame {
 	
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		this.container = container;
+		createWorld();
+	}
+
+	private void createWorld() {
 		world = new World();
 		
 		renderManager = new RenderManager<Graphics>(container.getGraphics());
@@ -55,23 +63,40 @@ public class ApolloWarrior extends BasicGame {
 		world.setEntityBuilder("ShipExplosion", new ExplosionBuilder(20));
 		
 		
-		Entity player = new Entity(world);
-		player.setComponent(new Transform(container.getWidth()/2, container.getHeight()-30));
-		player.setComponent(new PlayerSpatial());
-		player.setComponent(new Movement());
-		world.addEntity(player);
-		tagManager.register(Tags.Player, player);
-		
-		Entity bg = new Entity(world);
-		bg.setComponent(new BackgroundSpatial());
-		world.addEntity(bg);
-		
-		
+		createPlayerShip(container);
+		createBackground();
+		createInitialShips(container);
+	}
+
+	private void createInitialShips(GameContainer container) {
 		for(int i = 0; 10 > i; i++) {
 			Entity enemyShip = world.createEntity("EnemyShip");
 			enemyShip.getComponent(Transform.class).setLocation((float)Math.random()*container.getWidth(), 20);
 			world.addEntity(enemyShip);
 		}
+	}
+
+	private void createBackground() {
+		Entity bg = new Entity(world);
+		bg.setComponent(new BackgroundSpatial());
+		world.addEntity(bg);
+	}
+
+	private void createPlayerShip(GameContainer container) {
+		Entity player = new Entity(world);
+		player.setComponent(new Transform(container.getWidth()/2, container.getHeight()-30));
+		player.setComponent(new Health(100));
+		player.setComponent(new PlayerNode());
+		player.setComponent(new Movement());
+		player.addEventHandler("KILLED", new EventHandler() {
+			@Override
+			public void handleEvent() {
+				// just restart everything.
+				createWorld();
+			}
+		});
+		world.addEntity(player);
+		tagManager.register(Tags.Player, player);
 	}
 
 	@Override

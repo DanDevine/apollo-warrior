@@ -7,8 +7,9 @@ import org.newdawn.slick.geom.Polygon;
 import com.apollo.Layer;
 import com.apollo.annotate.InjectComponent;
 import com.apollo.components.Transform;
+import com.apollo.components.spatial.Node;
 
-public class PlayerSpatial extends SlickSpatial {
+public class PlayerNode extends Node<Graphics> {
 	@InjectComponent
 	Transform transform;
 	
@@ -22,13 +23,17 @@ public class PlayerSpatial extends SlickSpatial {
 		ship.addPoint(20,-20);
 
 	}
+	
+	@Override
+	protected void attachChildren() {
+		addChild(new HealthbarSpatial());
+	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.green);
 		ship.setCenterX(transform.getX());
 		ship.setCenterY(transform.getY());
-		//ship.setLocation(transform.getX(), transform.getY());
 		g.fill(ship);
 	}
 
